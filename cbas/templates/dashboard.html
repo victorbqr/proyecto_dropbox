@@ -14,30 +14,35 @@
         .bg-cbas-red { background-color: #EE0000; }
         .border-cbas-red { border-color: #EE0000; }
         .tab-btn.active { color: #EE0000; border-bottom: 2px solid #EE0000; font-weight: 600; }
+        /* Scrollbar delgada y limpia */
+        ::-webkit-scrollbar { height: 6px; width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
     </style>
 </head>
-<body class="text-gray-800 min-h-screen flex flex-col">
+<body class="text-gray-800 min-h-screen flex flex-col w-full overflow-x-hidden">
 
     <!-- Header Principal -->
-    <header class="bg-white border-b border-gray-200 px-6 py-3 shrink-0 shadow-sm">
-        <div class="flex justify-between items-center">
+    <header class="bg-white border-b border-gray-200 px-4 md:px-6 py-3 shrink-0 shadow-sm w-full">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
             <div class="flex items-center gap-3">
-                <div class="w-6 h-6 bg-cbas-red flex items-center justify-center text-white font-bold text-xs shadow-sm rounded-sm">
+                <div class="w-6 h-6 bg-cbas-red flex items-center justify-center text-white font-bold text-xs shadow-sm rounded-sm shrink-0">
                     <i class="fa-solid fa-cloud"></i>
                 </div>
                 <div>
-                    <div class="flex items-center gap-2">
-                        <h1 class="text-lg font-bold text-gray-900 tracking-tight">CBAS <span class="text-gray-300 font-normal">|</span> Cloud Backup & Storage Governance</h1>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <h1 class="text-base sm:text-lg font-bold text-gray-900 tracking-tight">CBAS <span class="text-gray-300 font-normal">|</span> Cloud Backup & Storage Governance</h1>
                         <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-gray-100 text-gray-600 border border-gray-200 uppercase font-semibold">UMSA - GRUPO 2</span>
                     </div>
                     <p class="text-xs text-gray-500">Gestión Desatendida de Versiones y Auditoría Forense con Dropbox Cloud API v2</p>
                 </div>
             </div>
 
-            <div class="flex items-center gap-3">
-                <div class="flex items-center gap-2 text-xs font-mono text-emerald-800 bg-emerald-50 px-3 py-1.5 border border-emerald-200 rounded-full shadow-sm">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span id="header-user">Dropbox: Conectado</span>
+            <div class="flex items-center gap-2 self-end sm:self-auto">
+                <div class="flex items-center gap-2 text-xs font-mono text-emerald-800 bg-emerald-50 px-3 py-1.5 border border-emerald-200 rounded-full shadow-sm max-w-xs truncate">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0"></span>
+                    <span id="header-user" class="truncate">Dropbox: Conectado</span>
                 </div>
                 <button onclick="cargarDatos()" class="flex items-center gap-1.5 text-xs font-mono bg-white border border-gray-300 hover:bg-gray-50 px-3 py-1.5 rounded transition shadow-sm text-gray-700">
                     <i class="fa-solid fa-arrows-rotate"></i> Actualizar
@@ -46,8 +51,8 @@
         </div>
 
         <!-- Barra de Telemetría Global -->
-        <div class="mt-3 pt-3 border-t border-gray-100 flex flex-wrap items-center justify-between text-xs text-gray-500 font-mono">
-            <div class="flex items-center gap-5">
+        <div class="mt-3 pt-3 border-t border-gray-100 flex flex-wrap items-center justify-between text-xs text-gray-500 font-mono gap-2">
+            <div class="flex flex-wrap items-center gap-3 sm:gap-5">
                 <span>Documentos: <strong id="stat-docs" class="text-gray-800">0</strong></span>
                 <span>Versiones: <strong id="stat-vers" class="text-gray-800">0</strong></span>
                 <span>Espacio en Nube: <strong id="stat-size" class="text-gray-800">0.00 KB</strong></span>
@@ -60,34 +65,34 @@
         </div>
     </header>
 
-    <!-- Barra de Navegación de Pestañas (Tabs) -->
-    <nav class="bg-white border-b border-gray-200 px-6 flex gap-6 text-xs text-gray-600">
-        <button onclick="cambiarTab('boveda')" id="btn-tab-boveda" class="tab-btn active py-3 flex items-center gap-2">
+    <!-- Barra de Navegación de Pestañas (Tabs) con scroll horizontal responsivo -->
+    <nav class="bg-white border-b border-gray-200 px-4 md:px-6 flex gap-4 md:gap-6 text-xs text-gray-600 overflow-x-auto shrink-0 w-full">
+        <button onclick="cambiarTab('boveda')" id="btn-tab-boveda" class="tab-btn active py-3 flex items-center gap-2 whitespace-nowrap">
             <i class="fa-solid fa-box-archive"></i> Bóveda y Versiones (Fig. 1, 2, 3)
         </button>
-        <button onclick="cambiarTab('auditoria')" id="btn-tab-auditoria" class="tab-btn py-3 flex items-center gap-2">
+        <button onclick="cambiarTab('auditoria')" id="btn-tab-auditoria" class="tab-btn py-3 flex items-center gap-2 whitespace-nowrap">
             <i class="fa-solid fa-shield-halved"></i> Pista de Auditoría de Red (Fig. 4)
         </button>
-        <button onclick="cambiarTab('simulador')" id="btn-tab-simulador" class="tab-btn py-3 flex items-center gap-2">
+        <button onclick="cambiarTab('simulador')" id="btn-tab-simulador" class="tab-btn py-3 flex items-center gap-2 whitespace-nowrap">
             <i class="fa-solid fa-triangle-exclamation"></i> Simulador de Feria & Ransomware
         </button>
-        <button onclick="cambiarTab('arquitectura')" id="btn-tab-arquitectura" class="tab-btn py-3 flex items-center gap-2">
+        <button onclick="cambiarTab('arquitectura')" id="btn-tab-arquitectura" class="tab-btn py-3 flex items-center gap-2 whitespace-nowrap">
             <i class="fa-solid fa-layer-group"></i> Storage Decoupling & Ecosistema
         </button>
     </nav>
 
-    <!-- Contenedor Dinámico Principal -->
-    <main class="flex-1 p-6 overflow-auto">
+    <!-- Contenedor Principal (w-full y min-w-0 evita cualquier desborde) -->
+    <main class="flex-1 p-4 md:p-6 w-full max-w-full min-w-0">
 
         <!-- TAB 1: BÓVEDA Y VERSIONES -->
-        <section id="tab-boveda" class="flex gap-6 items-start">
+        <section id="tab-boveda" class="flex flex-col lg:flex-row gap-5 items-start w-full min-w-0">
             <!-- Columna Izquierda: Lista de Archivos -->
-            <div class="w-80 shrink-0 bg-white border border-gray-200 rounded-md shadow-sm p-4">
+            <div class="w-full lg:w-72 xl:w-80 shrink-0 bg-white border border-gray-200 rounded-md shadow-sm p-4">
                 <div class="flex justify-between items-center mb-1">
                     <h3 class="text-xs font-bold uppercase tracking-wider text-gray-700">Archivos Monitoreados</h3>
                     <span id="badge-total-docs" class="text-xs font-mono px-2 py-0.5 rounded bg-gray-100 border text-gray-600">0</span>
                 </div>
-                <p class="text-[11px] text-gray-400 mb-3 truncate">Carpeta: .../proyecto-dropbox/directorio_pyme</p>
+                <p class="text-[11px] text-gray-400 mb-3 truncate">Carpeta: .../directorio_pyme</p>
 
                 <div class="relative mb-3">
                     <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-gray-400 text-xs"></i>
@@ -95,50 +100,50 @@
                            class="w-full text-xs pl-8 pr-3 py-1.5 border border-gray-200 rounded focus:outline-none focus:border-red-500">
                 </div>
 
-                <div id="lista-archivos-ui" class="space-y-1.5 max-h-[600px] overflow-y-auto">
+                <div id="lista-archivos-ui" class="space-y-1.5 max-h-[220px] lg:max-h-[580px] overflow-y-auto">
                     <!-- Elementos generados dinámicamente -->
                 </div>
             </div>
 
             <!-- Columna Derecha: Detalle de Versiones y Visor -->
-            <div id="panel-detalle-vacio" class="flex-1 bg-white border border-gray-200 rounded-md p-12 text-center text-gray-400">
+            <div id="panel-detalle-vacio" class="flex-1 w-full min-w-0 bg-white border border-gray-200 rounded-md p-10 text-center text-gray-400">
                 <i class="fa-solid fa-file-arrow-up text-4xl mb-3 text-gray-300"></i>
                 <p class="text-sm">Selecciona un archivo del inventario para inspeccionar sus versiones históricas en Dropbox.</p>
             </div>
 
-            <div id="panel-detalle" class="flex-1 hidden space-y-5">
+            <div id="panel-detalle" class="flex-1 w-full min-w-0 hidden space-y-5">
                 <!-- Tarjeta Encabezado Archivo -->
-                <div class="bg-white border border-gray-200 rounded-md shadow-sm p-5">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <div class="flex items-center gap-2">
+                <div class="bg-white border border-gray-200 rounded-md shadow-sm p-4 md:p-5 w-full min-w-0">
+                    <div class="flex flex-col sm:flex-row justify-between items-start gap-3">
+                        <div class="min-w-0 flex-1">
+                            <div class="flex items-center gap-2 flex-wrap">
                                 <span id="archivo-ext-badge" class="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-gray-800 text-white uppercase">TXT</span>
-                                <h2 id="archivo-seleccionado-titulo" class="text-xl font-bold text-gray-900 font-mono">archivo.txt</h2>
+                                <h2 id="archivo-seleccionado-titulo" class="text-lg md:text-xl font-bold text-gray-900 font-mono truncate">archivo.txt</h2>
                                 <span id="archivo-version-badge" class="px-2 py-0.5 rounded text-xs font-mono bg-gray-100 border text-gray-700">v1</span>
                             </div>
-                            <p class="text-xs text-gray-400 font-mono mt-1" id="archivo-ruta-dropbox">/CBAS_Pyme_Vault/archivo.txt</p>
+                            <p class="text-xs text-gray-400 font-mono mt-1 truncate" id="archivo-ruta-dropbox">/CBAS_Pyme_Vault/archivo.txt</p>
                         </div>
-                        <div class="text-right text-xs">
-                            <span class="text-gray-400">Último respaldo:</span> <span id="archivo-ultimo-tiempo" class="font-mono text-gray-700">2026-11-04 00:00:00 UTC</span><br>
+                        <div class="text-left sm:text-right text-xs shrink-0">
+                            <span class="text-gray-400">Último respaldo:</span> <span id="archivo-ultimo-tiempo" class="font-mono text-gray-700">2026-11-04 UTC</span><br>
                             <span class="text-gray-400">Modificado por:</span> <strong id="archivo-ultimo-user" class="font-mono text-gray-800">usuario (IP)</strong>
                         </div>
                     </div>
 
-                    <!-- Fila de Tarjetas Horizontales de Versión -->
-                    <div class="mt-5">
+                    <!-- Fila de Tarjetas Horizontales de Versión con Scroll Horizontal Seguro -->
+                    <div class="mt-5 w-full min-w-0">
                         <div class="flex justify-between items-center mb-2">
                             <h4 class="text-xs font-bold uppercase tracking-wider text-gray-600">Historial de Versiones en la Nube</h4>
-                            <span class="text-[11px] text-gray-400">Haz clic en una versión para ver sus metadatos o restaurarla</span>
+                            <span class="text-[11px] text-gray-400 hidden sm:inline">Desplaza horizontalmente para ver revisiones previas</span>
                         </div>
-                        <div id="contenedor-tarjetas-versiones" class="flex gap-3 overflow-x-auto pb-2">
+                        <div id="contenedor-tarjetas-versiones" class="flex gap-3 overflow-x-auto pb-3 w-full min-w-0">
                             <!-- Tarjetas generadas dinámicamente -->
                         </div>
                     </div>
                 </div>
 
                 <!-- Tarjeta Ficha Técnica de la Versión Seleccionada -->
-                <div class="bg-white border border-gray-200 rounded-md shadow-sm p-5">
-                    <div class="flex justify-between items-center border-b border-gray-100 pb-4">
+                <div class="bg-white border border-gray-200 rounded-md shadow-sm p-4 md:p-5 w-full min-w-0">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-gray-100 pb-4 gap-3">
                         <div>
                             <div class="flex items-center gap-2">
                                 <h3 id="ficha-version-tag" class="text-base font-bold text-gray-900">Versión v1</h3>
@@ -146,52 +151,52 @@
                             </div>
                             <p class="text-xs text-gray-500 mt-0.5" id="ficha-version-desc">Versión sincronizada con Dropbox</p>
                         </div>
-                        <div class="flex gap-2">
-                            <button id="btn-descargar-rev" class="px-3 py-1.5 border border-gray-300 rounded text-xs font-mono hover:bg-gray-50 text-gray-700 flex items-center gap-1.5">
-                                <i class="fa-solid fa-download"></i> Descargar copia de esta versión
+                        <div class="flex flex-wrap gap-2 w-full sm:w-auto">
+                            <button id="btn-descargar-rev" class="px-3 py-1.5 border border-gray-300 rounded text-xs font-mono hover:bg-gray-50 text-gray-700 flex items-center gap-1.5 flex-1 sm:flex-initial justify-center">
+                                <i class="fa-solid fa-download"></i> Descargar copia
                             </button>
-                            <button id="btn-restaurar-rev" class="px-3 py-1.5 bg-cbas-red text-white rounded text-xs font-mono font-semibold hover:bg-red-700 flex items-center gap-1.5 shadow-sm">
-                                <i class="fa-solid fa-rotate-left"></i> Restaurar en estación local
+                            <button id="btn-restaurar-rev" class="px-3 py-1.5 bg-cbas-red text-white rounded text-xs font-mono font-semibold hover:bg-red-700 flex items-center gap-1.5 shadow-sm flex-1 sm:flex-initial justify-center">
+                                <i class="fa-solid fa-rotate-left"></i> Restaurar v2 en carpeta local
                             </button>
                         </div>
                     </div>
 
-                    <!-- Metadatos ISO 27001 -->
-                    <div class="grid grid-cols-4 gap-4 py-4 text-xs font-mono border-b border-gray-100">
-                        <div>
+                    <!-- Metadatos ISO 27001 con Cuadrícula Responsiva y word-break -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 py-4 text-xs font-mono border-b border-gray-100 w-full min-w-0">
+                        <div class="min-w-0">
                             <span class="text-gray-400 block text-[10px] uppercase font-bold">ID Revisión Rev</span>
                             <span id="ficha-rev" class="text-gray-800 break-all font-semibold">0165ec03f...</span>
                         </div>
-                        <div>
+                        <div class="min-w-0">
                             <span class="text-gray-400 block text-[10px] uppercase font-bold">Hash SHA-256 (4 MB)</span>
                             <span id="ficha-hash" class="text-gray-800 break-all">c378455...</span>
                         </div>
-                        <div>
+                        <div class="min-w-0">
                             <span class="text-gray-400 block text-[10px] uppercase font-bold">Estación / IP Origen</span>
-                            <span id="ficha-estacion" class="text-gray-800">LENOVO (192.168.0.12)</span>
+                            <span id="ficha-estacion" class="text-gray-800 break-words">LENOVO (192.168.0.12)</span>
                         </div>
-                        <div>
+                        <div class="min-w-0">
                             <span class="text-gray-400 block text-[10px] uppercase font-bold">Tamaño y Fecha UTC</span>
-                            <span id="ficha-tamano-fecha" class="text-gray-800">428 B (2026-11-04)</span>
+                            <span id="ficha-tamano-fecha" class="text-gray-800 break-words">428 B (2026-11-04)</span>
                         </div>
                     </div>
 
                     <!-- Vista Previa del Documento -->
-                    <div class="mt-4">
+                    <div class="mt-4 w-full min-w-0">
                         <div class="flex justify-between items-center mb-2">
                             <span class="text-xs font-bold text-gray-700 uppercase">Vista previa del documento en disco local</span>
                             <span class="text-[11px] text-gray-400 font-mono">Texto plano / datos estructurados</span>
                         </div>
-                        <pre id="visor-contenido-codigo" class="bg-gray-50 border border-gray-200 p-4 rounded text-xs font-mono text-gray-700 max-h-60 overflow-auto whitespace-pre-wrap leading-relaxed">Cargando contenido...</pre>
+                        <pre id="visor-contenido-codigo" class="bg-gray-50 border border-gray-200 p-4 rounded text-xs font-mono text-gray-700 max-h-60 overflow-auto whitespace-pre-wrap break-all leading-relaxed w-full">Cargando contenido...</pre>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- TAB 2: PISTA DE AUDITORÍA FORENSE (FIGURA 4) -->
-        <section id="tab-auditoria" class="hidden">
-            <div class="bg-white border border-gray-200 rounded-md shadow-sm overflow-hidden">
-                <div class="p-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
+        <section id="tab-auditoria" class="hidden w-full min-w-0">
+            <div class="bg-white border border-gray-200 rounded-md shadow-sm overflow-hidden w-full">
+                <div class="p-4 border-b border-gray-200 bg-gray-50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                     <div>
                         <h2 class="text-sm font-bold text-gray-800">Registro de Telemetría y Auditoría de Red</h2>
                         <p class="text-xs text-gray-500">Pista inmutable conforme a estándares ISO/IEC 27001 (A.12.4) y COBIT</p>
@@ -204,8 +209,8 @@
                     </div>
                 </div>
 
-                <div class="overflow-x-auto">
-                    <table class="w-full text-xs text-left">
+                <div class="overflow-x-auto w-full">
+                    <table class="w-full text-xs text-left min-w-[750px]">
                         <thead class="font-mono bg-gray-50 border-b border-gray-200 text-gray-500 uppercase">
                             <tr>
                                 <th class="px-4 py-3">Fecha y Hora (UTC)</th>
@@ -227,7 +232,7 @@
         </section>
 
         <!-- TAB 3: SIMULADOR DE FERIA & RANSOMWARE -->
-        <section id="tab-simulador" class="hidden max-w-4xl mx-auto space-y-6">
+        <section id="tab-simulador" class="hidden max-w-4xl mx-auto space-y-6 w-full">
             <div class="bg-white border border-gray-200 rounded-md p-6 shadow-sm">
                 <h2 class="text-base font-bold text-gray-900 mb-2 flex items-center gap-2 text-cbas-red">
                     <i class="fa-solid fa-biohazard"></i> Escenario de Prueba en Vivo para el Jurado
@@ -236,7 +241,7 @@
                     Demuestra la resiliencia del sistema ante un ataque de secuestro de datos. Puedes simular que un ransomware cifra un archivo local y observar cómo la arquitectura desacoplada permite viajar en el tiempo y restaurar la versión sana en 1 clic.
                 </p>
 
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div class="p-4 border border-red-200 bg-red-50/50 rounded-md">
                         <h3 class="font-bold text-xs text-red-800 uppercase mb-2">Paso 1: Simular Infección Ransomware</h3>
                         <p class="text-xs text-gray-600 mb-4">Sobrescribe el archivo seleccionado con un payload simulado cifrado (`LOCKBIT_ENCRYPTED`).</p>
@@ -261,10 +266,10 @@
         </section>
 
         <!-- TAB 4: STORAGE DECOUPLING & ECOSISTEMA -->
-        <section id="tab-arquitectura" class="hidden max-w-4xl mx-auto space-y-6">
+        <section id="tab-arquitectura" class="hidden max-w-4xl mx-auto space-y-6 w-full">
             <div class="bg-white border border-gray-200 rounded-md p-6 shadow-sm">
                 <h2 class="text-base font-bold text-gray-900 mb-3">Arquitectura Híbrida Desacoplada (Storage Decoupling)</h2>
-                <div class="grid grid-cols-2 gap-6 text-xs text-gray-600">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-xs text-gray-600">
                     <div class="p-4 bg-gray-50 border rounded">
                         <h3 class="font-bold text-gray-800 mb-2 uppercase text-[11px]"><i class="fa-solid fa-server text-blue-600"></i> Plano de Datos (Dropbox Core Storage)</h3>
                         <p>Los archivos binarios reales (Word, PDF, CSV) viajan directo a la nube de Dropbox sobre infraestructura Magic Pocket y cifrado AES-256. El servidor backend jamás almacena archivos pesados.</p>
@@ -284,7 +289,6 @@
         let archivoActual = null;
         let versionSeleccionada = null;
 
-        // Reloj en tiempo real
         setInterval(() => {
             document.getElementById('reloj-utc').innerText = new Date().toISOString().replace('T', ' ').substring(0, 19) + ' UTC';
         }, 1000);
@@ -350,7 +354,7 @@
 
             archivos.forEach(nombre => {
                 const historial = datosArchivos[nombre];
-                const ultimaVersion = historial[0]; // orden descendente
+                const ultimaVersion = historial[0];
                 const activa = (nombre === archivoActual);
 
                 const item = document.createElement('div');
@@ -361,11 +365,11 @@
 
                 const ext = nombre.split('.').pop().toUpperCase();
                 item.innerHTML = `
-                    <div class="overflow-hidden pr-2">
+                    <div class="overflow-hidden pr-2 min-w-0">
                         <div class="font-mono text-xs font-bold text-gray-800 truncate">${nombre}</div>
-                        <div class="text-[10px] text-gray-400 uppercase font-mono mt-0.5">${ext} • ${(ultimaVersion.tamano_bytes || 0)} B</div>
+                        <div class="text-[10px] text-gray-400 uppercase font-mono mt-0.5 truncate">${ext} • ${(ultimaVersion.tamano_bytes || 0)} B</div>
                     </div>
-                    <span class="text-xs font-mono px-2 py-0.5 rounded bg-gray-100 text-gray-600 border">${ultimaVersion.version_tag}</span>
+                    <span class="text-xs font-mono px-2 py-0.5 rounded bg-gray-100 text-gray-600 border shrink-0">${ultimaVersion.version_tag}</span>
                 `;
                 contenedor.appendChild(item);
             });
@@ -395,14 +399,13 @@
             document.getElementById('archivo-ultimo-tiempo').innerText = ultima.fecha_utc;
             document.getElementById('archivo-ultimo-user').innerText = `${ultima.usuario} (${ultima.ip_origen})`;
 
-            // Renderizar tarjetas de versión horizontales
             const contenedorTarjetas = document.getElementById('contenedor-tarjetas-versiones');
             contenedorTarjetas.innerHTML = '';
 
             historial.forEach((v, index) => {
                 const esActual = (index === 0);
                 const tarjeta = document.createElement('div');
-                tarjeta.className = `shrink-0 w-44 p-3 rounded border cursor-pointer transition text-xs font-mono ${
+                tarjeta.className = `shrink-0 w-36 sm:w-40 p-3 rounded border cursor-pointer transition text-xs font-mono ${
                     (versionSeleccionada && versionSeleccionada.rev === v.rev) || (!versionSeleccionada && esActual)
                         ? 'bg-gray-900 text-white border-gray-900 shadow-sm'
                         : 'bg-white text-gray-800 border-gray-200 hover:border-gray-400'
@@ -414,9 +417,9 @@
                         <strong class="text-sm font-bold">${v.version_tag}</strong>
                         ${esActual ? '<span class="px-1.5 py-0.5 bg-red-600 text-white text-[9px] rounded font-bold">ACTUAL</span>' : ''}
                     </div>
-                    <div class="text-[10px] opacity-75 uppercase mb-1">${v.operacion} • ${v.tamano_bytes} B</div>
+                    <div class="text-[10px] opacity-75 uppercase mb-1 truncate">${v.operacion} • ${v.tamano_bytes} B</div>
                     <div class="text-[9px] opacity-60 truncate">rev: ${v.rev.substring(0, 10)}...</div>
-                    <div class="text-[9px] opacity-60 mt-1">${v.fecha_utc.split(' ')[1]} UTC</div>
+                    <div class="text-[9px] opacity-60 mt-1 truncate">${v.fecha_utc.split(' ')[1]} UTC</div>
                 `;
                 contenedorTarjetas.appendChild(tarjeta);
             });
@@ -425,7 +428,6 @@
                 seleccionarVersion(ultima);
             }
 
-            // Cargar contenido en el visor
             cargarContenidoVisor(nombre);
         }
 
@@ -438,7 +440,6 @@
             document.getElementById('ficha-estacion').innerText = `${v.usuario} (${v.ip_origen})`;
             document.getElementById('ficha-tamano-fecha').innerText = `${v.tamano_bytes} B (${v.fecha_utc})`;
 
-            // Configurar botones
             document.getElementById('btn-descargar-rev').onclick = () => {
                 window.location.href = `/api/download/${v.nombre_archivo}/${v.rev}`;
             };
@@ -487,7 +488,6 @@
             tbody.innerHTML = '';
             let eventos = [];
             
-            // Llenar select con archivos disponibles
             const archivos = Object.keys(datosArchivos);
             selectFiltro.innerHTML = '<option value="TODOS">Todos los archivos</option>';
             archivos.forEach(a => {
@@ -511,15 +511,15 @@
                 const tr = document.createElement('tr');
                 tr.className = "hover:bg-gray-50 transition border-b border-gray-100";
                 tr.innerHTML = `
-                    <td class="px-4 py-3 text-gray-500">${item.fecha_utc}</td>
+                    <td class="px-4 py-3 text-gray-500 whitespace-nowrap">${item.fecha_utc}</td>
                     <td class="px-4 py-3 font-bold text-gray-800">${item.nombre_archivo}</td>
                     <td class="px-4 py-3"><span class="px-2 py-0.5 rounded bg-gray-100 text-gray-700 border">${item.version_tag}</span></td>
                     <td class="px-4 py-3"><span class="px-2 py-0.5 rounded text-[10px] ${opColor}">${item.operacion}</span></td>
-                    <td class="px-4 py-3 text-gray-600">${item.tamano_bytes} bytes</td>
-                    <td class="px-4 py-3 text-gray-600">${item.usuario}<br><span class="text-gray-400 text-[10px]">${item.ip_origen}</span></td>
-                    <td class="px-4 py-3 text-gray-500">${item.rev.substring(0, 15)}...</td>
+                    <td class="px-4 py-3 text-gray-600 whitespace-nowrap">${item.tamano_bytes} bytes</td>
+                    <td class="px-4 py-3 text-gray-600 whitespace-nowrap">${item.usuario}<br><span class="text-gray-400 text-[10px]">${item.ip_origen}</span></td>
+                    <td class="px-4 py-3 text-gray-500 font-mono text-[11px]">${item.rev.substring(0, 15)}...</td>
                     <td class="px-4 py-3 text-right">
-                        <button onclick="seleccionarArchivo('${item.nombre_archivo}'); cambiarTab('boveda');" class="text-[11px] font-mono border px-2.5 py-1 rounded hover:bg-gray-100 text-gray-700 bg-white">
+                        <button onclick="seleccionarArchivo('${item.nombre_archivo}'); cambiarTab('boveda');" class="text-[11px] font-mono border px-2.5 py-1 rounded hover:bg-gray-100 text-gray-700 bg-white whitespace-nowrap">
                             Ver Ficha
                         </button>
                     </td>
@@ -528,7 +528,6 @@
             });
         }
 
-        // Funciones del Simulador
         function simularAtaqueRansomware() {
             if (!archivoActual) {
                 alert("Selecciona primero un archivo en la Bóveda.");
@@ -545,15 +544,13 @@
                 alert("Se necesita al menos dos versiones para hacer un rollback histórico.");
                 return;
             }
-            // Restaurar a la versión anterior más limpia
-            const versionLimpia = historial[historial.length - 1]; // v1 original
+            const versionLimpia = historial[historial.length - 1];
             restaurarArchivo(archivoActual, versionLimpia.rev);
             document.getElementById('alerta-ransomware').classList.add('hidden');
         }
 
-        // Carga inicial y auto-refresco
         cargarDatos();
-        setInterval(cargarDatos, 3500); // Polling cada 3.5 segundos
+        setInterval(cargarDatos, 3500);
     </script>
 </body>
 </html>
