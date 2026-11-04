@@ -1,0 +1,5 @@
+.env
+__pycache__/
+cbas_auditoria.db
+directorio_pyme/*
+!directorio_pyme/.keep
